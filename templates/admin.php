@@ -14,6 +14,25 @@
   <meta name="author" content="Kamitsune">
 </head>
 <body>
+  <h1>Liste des messages</h1>
+  <table>
+    <thead>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Message</th>
+    </thead>
+    <tbody>
+      <?php foreach($data as $d): ?>
+        <tr>
+          <td><?= $d['lastname']; ?></td>
+          <td><?= $d['firstname']; ?></td>
+          <td><?= $d['email']; ?></td>
+          <td><?= $d['message']; ?></td>
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
 
 </body>
 </html>
