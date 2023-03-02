@@ -1,3 +1,5 @@
+@property --rotate{syntax:"<angle>";initial-value:132deg;inherits:false;}
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -11,6 +13,10 @@
 
 :not(.not){
     color: white;
+}
+
+:not(i){
+    font-family: 'Roboto', sans-serif;
 }
 
 .hide {
@@ -29,6 +35,68 @@ body{
     overflow: hidden;
     margin: 0;
     perspective: 100px;
+
+    #outerCursor{
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid white;
+        mix-blend-mode: difference;
+        pointer-events: none;
+        transition: width 0.1s ease-in-out, height 0.1s ease-in-out, top 0.2s ease-out, left 0.2s ease-out;
+        z-index: 10;
+    }
+    
+    #innerCursor{
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        border-radius: 50%;
+        background: dodgerblue;
+        pointer-events: none;
+        transition: width 0.1s ease-in-out, height 0.1s ease-in-out;
+        animation: change-color 5s linear infinite;
+        z-index: 10;
+
+        @keyframes change-color {
+            to {
+                filter: hue-rotate(1turn);
+            }
+        }
+    }
+
+    .progress {
+        position: fixed;
+        grid-row: 11;
+        grid-column: 2;
+        width: 50px;
+        height: 50px;
+        transform: rotate(-90deg);
+        z-index: 9;
+
+        svg {
+            .progress-circle {
+                fill: transparent;
+                stroke: white;
+                stroke-width: 3;
+                filter: drop-shadow(0 0 3px #ffffff)
+            }
+        }
+    }
+
+    .progress2 {
+        @extend .progress;
+        z-index: 8;
+
+        svg {
+            .progress-circle2 {
+                fill: transparent;
+                stroke: gray;
+                stroke-width: 3;
+            }
+        }
+    }
 
     .overlay{
         width: 100%;
@@ -145,6 +213,401 @@ body{
             font-size: 1.5rem;
             padding: 0 30px 30px 30px;
             text-align: justify;
+        }
+    }
+
+    .projects {
+        grid-row: 1 / span 2;
+        grid-column: 1 / 13;
+        font-size: 5rem;
+        transform: translateZ(-260px);
+        position: relative;
+        z-index: -1;
+        transition: transform 0.5s linear, opacity 0.2s linear;
+    }
+
+    .project {
+        grid-row: 1 / 13;
+        grid-column: 8 / 11;
+        width: 600px;
+        height: calc((600px * 9) / 16);
+        border: 2px solid white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.4);
+        position: relative;
+        z-index: -1;
+        transition: transform 0.5s linear, opacity 0.2s linear;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .project-alt {
+        @extend .project;
+        grid-column: 2 / 5;
+    }
+
+    .one {
+        transform: translateZ(-420px);
+    }
+    
+    .two {
+        transform: translateZ(-580px);
+    }
+
+    .three {
+        transform: translateZ(-740px);
+    }
+
+    .four {
+        transform: translateZ(-900px);
+    }
+
+    .five {
+        transform: translateZ(-1060px);
+    }
+    
+    .six {
+        transform: translateZ(-1220px);
+    }
+
+    .contact {
+        grid-row: 1 / span 2;
+        grid-column: 1 / 13;
+        font-size: 5rem;
+        transform: translateZ(-1380px);
+        position: relative;
+        z-index: -1;
+        transition: transform 0.5s linear, opacity 0.2s linear;
+    }
+
+    .card-container {
+        grid-row: 3 / 13;
+        grid-column: 1 / 13;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateZ(-1540px);
+        position: relative;
+        z-index: -1;
+        transition: transform 0.5s linear, opacity 0.2s linear;
+        perspective: 500px;
+
+        #card {
+            width: 400px;
+            height: 600px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+
+            &:before {
+                content: "";
+                width: 101%;
+                height: 100.6%;
+                border-radius: 8px;
+                background-image: linear-gradient(var(--rotate), #5d7bff, #843ce3 43%, #c20098);
+                position: absolute;
+                z-index: -2;
+                top: -.25%;
+                left: -.5%;
+                animation: spin 4s linear infinite;
+                // background-size: 110% 110%;
+            }
+
+            &:after {
+                position: absolute;
+                content: "";
+                top: -90px;
+                left: 0;
+                right: 0;
+                z-index: -2;
+                height: 130%;
+                width: 100%;
+                margin: 0 auto;
+                transform: scale(0.62);
+                filter: blur(100px);
+                background-image: linear-gradient(var(--rotate), #5d7bff, #843ce3 43%, #c20098);
+                animation: spin 4s linear infinite;
+                // background-size: 110% 110%;
+            }
+
+            @keyframes spin {
+                0% {
+                    --rotate: 0deg;
+                }
+                100% {
+                    --rotate: 360deg;
+                }
+            }
+
+            .face {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                transform: translateZ(20px);
+            }
+
+            .front {
+                background: black;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                height: 100%;
+                border-radius: 8px;
+                z-index: 10;
+                display: flex;
+                justify-content: center;
+
+                #form-message {
+                    position: relative;
+                    width: 25rem;
+                    padding: 3rem;
+                    margin: auto;
+
+                    label, input, textarea{
+                        display: block;
+                        font-size: 1rem;
+                        padding: 0 0.5rem;
+                    }
+
+                    input, textarea{
+                        margin-bottom: 4rem;
+                        height: 1.5rem;
+                        width: 100%;
+                        padding-bottom: 0.5rem;
+                        border: none;
+                        outline: none;
+                        background-color: transparent;
+                        color: white;
+
+                        &:placeholder {
+                            color: #444444;
+                        }
+                    }
+
+                    label{
+                        position: absolute;
+                        transition: all 0.2s;
+                    }
+
+                    .focusedLabel{
+                        transform: translateY(-1.5rem);
+                        font-size: 0.8rem;
+                    }
+
+                    textarea {
+                        height: 8rem;
+                        resize: none;
+                        font-family: 'Open Sans', sans-serif;
+                    }
+
+                    .submit {
+                        margin: auto;
+                        border: 1px solid #fff;
+                        color: white;
+                        border-radius: 4px;
+                        transition: transform .1s linear, box-shadow 1s linear;
+                        width: 45%;
+                        height: 43px;
+
+                        #btnForm{
+                            padding: 0.8rem 2rem;
+                            outline: none;
+                            border: none;
+                            background: none;
+                            color: white;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            transition: all 0.1s;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            font-weight: 500;
+                            font-size: 0.8rem;
+                            position: relative;
+                            z-index: 10;
+                        }
+                    }
+
+                    .submit::before {
+                        content: "";
+                        position: absolute;
+                        width: 134px;
+                        height: 41px;
+                        border-radius: 4px;
+                        transform: scaleX(0);
+                        transition: transform 2s ease-in-out;
+                    }
+
+                    .submit:active{
+                        transform: translateY(0.25rem) scale(0.9);
+                        box-shadow: 0 0 0.5rem 0 #0231ff80;
+                    }
+
+                    .ready {
+                        border: 1px solid #0231ff10;
+                    }
+
+                    .ready::before {
+                        transform-origin: center center;
+                        transform: scaleX(1);
+                        background: radial-gradient(circle, rgba(255,255,255,1) 0%,
+                                                            rgba(112,138,255,1) 1%,
+                                                            rgba(98,127,255,1) 10%,
+                                                            rgba(81,113,255,1) 25%,
+                                                            rgba(45,83,255,1) 75%,
+                                                            rgb(78, 111, 151) 100%);
+                        box-shadow: 0 0 3rem 0.1rem #0231ff50;
+                        border-radius: 4px;
+                    }
+
+                    [id^="underline"] {
+                        display: block;
+                        width: 100%;
+                        height: 2px;
+                        border-radius: 50%;
+                        background: #444444;
+                        position: relative;
+                        top: 35px;
+                        overflow: hidden;
+                    }
+
+                    #underline4 {
+                        top: 148px;
+                    }
+
+                    [id^="underline"]::before {
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        left: 50%;
+                        transform: scaleX(0);
+                        width: 0;
+                        height: 2px;
+                        border-radius: 50%;
+                        background-color: #fff;
+                        transition: transform 1s ease-in-out;
+                    }
+
+                    .underline-animation::before {
+                        transform-origin: center center;
+                        transform: scaleX(1);
+                        left: 50%;
+                        width: 1%;
+                        box-shadow: 0 0 1rem .1rem #fff,
+                                    0 0 1rem 2rem #708aff,
+                                    0 0 1rem 1rem #627fff,
+                                    0 0 1rem 2rem #5171ff,
+                                    0 0 1rem 5rem #2d53ff,
+                                    0 0 1rem 10rem #0231ff;
+                    }
+
+                    .underline-animation-error::before {
+                        box-shadow: 0 0 1rem .1rem #fff,
+                                    0 0 1rem 2rem #FF708A,
+                                    0 0 1rem 1rem #FF617E,
+                                    0 0 1rem 2rem #FF5271,
+                                    0 0 1rem 5rem #FF2E54,
+                                    0 0 1rem 10rem #FF0033;
+                    }
+                }
+            }
+
+            .middle {
+                transform: rotateY(180deg);
+                backface-visibility: visible;
+                border-radius: 8px;
+
+                #social-bg {
+                    height: 100%;
+                    border-radius: 8px;
+                }
+            }
+
+            .back {
+                transform: translateZ(-50px) rotateY(180deg);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .fa-brands {
+                    font-size: 4rem;
+                    text-align: center;
+                    color: white;
+                    margin-top: 30px;
+                    text-shadow: 0 0 5px white;
+                }
+
+                .info {
+                    @extend .fa-brands;
+                    font-size: 1.4rem;
+                    text-shadow: 0 0 5px #2d53ff;
+                }
+            }
+        }
+
+        #svg-container {
+            grid-row: 3 / 13;
+            grid-column: 1 / 13;
+            position: absolute;
+            z-index: 5;
+            
+            svg#checkmark {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 2;
+            stroke: #fff;
+            stroke-miterlimit: 10;
+            box-shadow: inset 0px 0px 0px #2d53ff;
+            animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+            pointer-events: none;
+
+                .checkmark__circle {
+                    stroke-dasharray: 166;
+                    stroke-dashoffset: 166;
+                    stroke-width: 2;
+                    stroke-miterlimit: 10;
+                    stroke: #2d53ff;
+                    fill: none;
+                    animation: stroke .6s cubic-bezier(0.650, 0.000, 0.450, 1.000) forwards;
+                }
+
+                .checkmark__check {
+                    transform-origin: 50% 50%;
+                    stroke-dasharray: 48;
+                    stroke-dashoffset: 48;
+                    animation: stroke .3s cubic-bezier(0.650, 0.000, 0.450, 1.000) .8s forwards;
+                }
+
+                @keyframes stroke {
+                    100% {
+                        stroke-dashoffset: 0;
+                    }
+                }
+
+                @keyframes scale {
+                    0%, 100% {
+                        transform: none;
+                    }
+                    50% {
+                        transform: scale3d(1.1, 1.1, 1);
+                    }
+                }
+
+                @keyframes fill {
+                    100% {
+                        box-shadow: inset 0px 0px 0px 30px #2d53ff;
+                    }
+                }
+            }
         }
     }
 }
