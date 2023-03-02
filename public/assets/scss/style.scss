@@ -1,0 +1,150 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none !important;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+:not(.not){
+    color: white;
+}
+
+.hide {
+    display: none;
+}
+
+body{
+    background: black;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    perspective: 100px;
+
+    .overlay{
+        width: 100%;
+        height: 100%;
+        grid-row: 1 / 13;
+        grid-column: 1 / 13;
+        background: black;
+        transition: opacity 1s ease-in-out;
+        pointer-events: none;
+    }
+    
+    .portfolio{
+        font-size: 5rem;
+        grid-row: 1 / 13;
+        grid-column: 1 / 13;
+        justify-self: center;
+        align-items: center;
+        text-align: center;
+        width: 1500px;
+        height: 10rem;
+        color: dodgerblue;
+        opacity: 1;
+        transition: opacity 3s ease-in-out;
+        animation: change-color 10s linear infinite;
+        
+        @keyframes change-color {
+            to {
+                filter: hue-rotate(1turn);
+            }
+        }
+
+        span{
+            $nb-child: 10;
+            animation: moving 3s linear infinite;
+            animation-delay: calc((var(--n) - #{$nb-child}) * 0.2s);
+            position: absolute;
+            height: 10rem;
+            width: 5rem;
+            
+            @for $i from 1 through $nb-child {
+                &:nth-child(#{$i}) {
+                    --n: #{$i};
+                }
+            }
+            
+            @keyframes moving {
+                0% {
+                    filter: opacity(0);
+                    font-size: 1rem;
+                    left: 100%;
+                }
+                
+                33% {
+                    filter: opacity(1);
+                    font-size: 5rem;
+                    left: 60%;
+                }
+                
+                66% {
+                    filter: opacity(1);
+                    font-size: 5rem;
+                    left: 40%;
+                }
+                
+                100% {
+                    filter: opacity(0);
+                    font-size: 1rem;
+                    left: 0;
+                }
+            }
+        }
+    }
+
+    .myName{
+        font-size: 5rem;
+        grid-row: 1 / 13;
+        grid-column: 1 / 13;
+        pointer-events: none;
+        
+        :nth-child(1){
+            transform: translateY(-55vh) translateX(0);
+            transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
+            display: none;
+        }
+        :nth-child(2){
+            transform: translateY(55vh) translateX(0);
+            transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
+            display: none;
+        }
+    }
+
+    .bio{
+        grid-row: 1 / 13;
+        grid-column: 2 / 5;
+        width: 600px;
+        height: 600px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        transform: translateZ(-100px);
+        position: relative;
+        z-index: -1;
+        transition: transform 0.5s linear, opacity 0.2s linear;
+        
+        .catchphrase{
+            font-size: 2rem;
+            border-radius: 15px;
+            border: 2px solid white;
+            padding: 10px;
+        }
+        
+        .bioText{
+            font-size: 1.5rem;
+            padding: 0 30px 30px 30px;
+            text-align: justify;
+        }
+    }
+}
